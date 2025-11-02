@@ -4,9 +4,6 @@ class Solution:
         count_vowels = 0
         for letter in s:
             if letter in vowels:
-                count_vowels += 1
+                return True
         
-        if count_vowels == 0:
-            return False
-        
-        return True
+        return False
