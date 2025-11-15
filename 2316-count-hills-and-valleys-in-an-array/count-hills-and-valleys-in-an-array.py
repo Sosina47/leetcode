@@ -1,17 +1,21 @@
 class Solution:
     def countHillValley(self, nums: List[int]) -> int:
-        unique_nums = []
-        for num in nums:
-            if not unique_nums:
-                unique_nums.append(num)
-            elif num != unique_nums[-1]:
-                unique_nums.append(num)
-            else:
-                continue
-                
         count = 0
-        for index in range(1, len(unique_nums) - 1):
-            if unique_nums[index - 1] > unique_nums[index] < unique_nums[index + 1] or unique_nums[index - 1] < unique_nums[index] > unique_nums[index + 1]:
+        for i in range(1, len(nums) - 1):
+            left = i - 1
+            if nums[left] == nums[i]:
+                continue
+
+            right = i + 1
+            if nums[right] == nums[i]:
+                while right < len(nums) - 1:
+                    right += 1
+                    if nums[right] != nums[i]:
+                        break
+            if nums[right] == nums[i]:
+                continue
+            
+            if (nums[i] > nums[left] and nums[i] > nums[right]) or (nums[i] < nums[left] and nums[i] < nums[right]):
                 count += 1
 
         return count
