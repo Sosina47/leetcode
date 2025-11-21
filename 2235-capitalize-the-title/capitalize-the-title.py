@@ -1,9 +1,11 @@
 class Solution:
     def capitalizeTitle(self, title: str) -> str:
-        titleList = [word.capitalize() for word in title.split()]
-        print(titleList)
+        titleList = []
         
-        for i in range(len(titleList)):
-            if len(titleList[i]) <= 2:
-                titleList[i] = titleList[i].lower()
+        for word in title.split():
+            if len(word) > 2:
+                titleList.append(word.capitalize())
+            else:
+                titleList.append(word.lower())
+
         return ' '.join(titleList)
