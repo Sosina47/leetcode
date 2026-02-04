@@ -1,1 +1,1 @@
-<h2>check-if-all-the-integers-in-a-range-are-covered Notes</h2><hr>[ Time taken: 13 m 44 s ]
+<h2>check-if-all-the-integers-in-a-range-are-covered Notes</h2><hr>[ Time taken: 3 hrs 2 m 48 s ]
