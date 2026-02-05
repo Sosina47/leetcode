@@ -1,18 +1,19 @@
 class Solution:
     def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
-        dict_2 = {val: index for index, val in enumerate(list2)}
-
+        min_sum = float('inf')
         output = []
-        min_index = float('inf')
 
         for i in range(len(list1)):
-            if list1[i] in dict_2:
-                index = i + dict_2[list1[i]]
-                
-                if index == min_index:
-                    output.append(list1[i])
-                elif index < min_index:
-                    output = [list1[i]]
-                    min_index = index
+            if list1[i] not in list2:
+                continue
+
+            idx = list2.index(list1[i]) + i 
+
+            if idx == min_sum:
+                output.append(list1[i])
+
+            elif idx < min_sum:
+                output = [list1[i]]
+                min_sum = idx
 
         return output
