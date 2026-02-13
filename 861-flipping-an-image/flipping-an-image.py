@@ -3,11 +3,7 @@ class Solution:
         for row in image:
             row.reverse()
 
-        for row in range(len(image)):
-            for col in range(len(image[0])):
-                if image[row][col] == 1:
-                    image[row][col] = 0
-                else:
-                    image[row][col] = 1
+            for i in range(len(row)):
+                row[i] = 1 - row[i] 
 
         return image
