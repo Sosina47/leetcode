@@ -1,21 +1,30 @@
 class Solution:
     def pancakeSort(self, arr: List[int]) -> List[int]:
+        length = len(arr)
+        sorted_arr = sorted(arr)
         output = []
 
-        for i in reversed(range(len(arr))):
-            if arr.index(i + 1) != i:
-                n = arr.index(i + 1) + 1
+        right_pos = length - 1
+        while right_pos > 0:
+            num = sorted_arr[right_pos]
 
-                if n > 1:
-                    self.reverse_arr(n, arr)
-                    output.append(n)
+            if arr[right_pos] != num:
+                i = arr.index(num)
 
-                self.reverse_arr(i + 1, arr)
-                output.append(i + 1)
+                if i > 0:
+                    self.reverse_arr(arr, i)
+                    output.append(i + 1) 
+
+                self.reverse_arr(arr, right_pos)
+                output.append(right_pos + 1)
+
+            right_pos -= 1
 
         return output
-    
-    def reverse_arr(self, n, arr):
-        reversed_arr = list(reversed(arr[:n]))
-        for j in range(n):
-            arr[j] = reversed_arr[j]
+
+    def reverse_arr(self, nums, end):
+        left, right = 0, end 
+
+        while left < right:
+            nums[left], nums[right] = nums[right], nums[left]
+            left, right = left + 1, right - 1
