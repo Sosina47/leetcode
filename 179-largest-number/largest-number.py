@@ -1,10 +1,5 @@
 class Solution:
     def largestNumber(self, nums):
-        def digits(num):
-            return tuple([i for i in str(num)])
-        
-        nums.sort(key = digits, reverse = True)
-
         for i in range(1, len(nums)):
             key = nums[i]
             j = i
