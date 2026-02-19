@@ -1,11 +1,5 @@
 class Solution:
     def maxCoins(self, piles: List[int]) -> int:
-        piles.sort(reverse=True)
-        length = len(piles)
-        max_coin = 0
-        i = 1
-        while i < (length - (length // 3)):
-            max_coin += piles[i] 
-            i += 2
+        piles.sort(reverse = True)
 
-        return max_coin
+        return sum([piles[i] for i in range(1, len(piles) - len(piles) // 3, 2)])
