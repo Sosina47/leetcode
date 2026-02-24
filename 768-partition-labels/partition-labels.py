@@ -1,25 +1,21 @@
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
-        frequency = Counter(s)
-        start = 0
+        occurance = Counter(s)
+        current = set()
+        prev = 0
         output = []
 
-        visiting = {}
         for i in range(len(s)):
-            if s[i] in visiting:
-
-                if visiting[s[i]] == 1:
-                    del visiting[s[i]]
-
-                else:
-                    visiting[s[i]] -= 1
+            if occurance[s[i]] > 1:
+                occurance[s[i]] -= 1
+                current.add(s[i])
 
             else:
-                if frequency[s[i]] > 1:
-                    visiting[s[i]] = frequency[s[i]] - 1
+                if s[i] in current:
+                    current.remove(s[i])
 
-            if not visiting:
-                output.append(i - start + 1)
-                start = i + 1
-        
+                if not current:
+                    output.append(i + 1 - prev)
+                    prev = i + 1
+                    
         return output
