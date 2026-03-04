@@ -1,23 +1,15 @@
 class Solution:
     def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
-        s = [ord(letter) % 97 for letter in s]
-        prefix = [0] * len(s)
+        prefix = [0] * (len(s) + 1)
+        for start, end, direction in shifts:
+            prefix[start] += (2 * direction - 1)
+            prefix[end + 1] -= (2 * direction - 1)
 
-        for a, b, c in shifts:
-            if c == 0:
-                prefix[b] -= 1
-                if a > 0: prefix[a - 1] += 1
-
-            else:
-                prefix[b] += 1
-                if a > 0: prefix[a - 1] -= 1
-
-        diff = 0
-        for i in range(len(s) - 1, -1, -1):
-            diff += prefix[i]
-            s[i] = (s[i] + diff) % 26
-
+        prefix = list(itertools.accumulate(prefix))
         for i in range(len(s)):
-            s[i] = chr(s[i] + 97)
+            prefix[i] += ord(s[i]) - ord('a')
+            prefix[i] %= 26
+            prefix[i] = chr(prefix[i] + ord('a'))
 
-        return ''.join(s)
+        prefix.pop()
+        return ''.join(prefix) 
