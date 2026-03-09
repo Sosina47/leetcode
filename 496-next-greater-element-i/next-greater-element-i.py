@@ -1,23 +1,12 @@
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        greater = defaultdict(lambda: -1)
         stack = []
-        length = len(nums2)
-        result = [-1] * length
 
-        for i in range(length - 1, -1, -1):
-            num = nums2[i]
+        for i in range(len(nums2)):
+            while stack and stack[-1] < nums2[i]:
+                greater[stack.pop()] = nums2[i]
 
-            while stack and stack[-1] <= num:
-                stack.pop()
-            
-            if stack:
-                result[i] = stack[-1]
-            
-            stack.append(num)
+            stack.append(nums2[i])
 
-        position = {nums2[i]: i for i in range(length)}
-
-        for i in range(len(nums1)):
-            nums1[i] = result[position[nums1[i]]]
-
-        return nums1
+        return [greater[num] for num in nums1]
