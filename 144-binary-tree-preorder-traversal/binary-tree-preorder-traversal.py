@@ -6,11 +6,12 @@
 #         self.right = right
 class Solution:
     def traverse(self, root):
-        output = []
         if root == None:
             return []
 
+        output = []
         output.append(root.val)
+
         output.extend(self.traverse(root.left))
         output.extend(self.traverse(root.right))
 
@@ -19,4 +20,23 @@ class Solution:
         
     
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        return self.traverse(root)
+        if not root:
+            return []
+
+        output = []
+        stack = [root]
+
+        while stack:
+            node = stack.pop()
+            if node:
+                output.append(node.val)
+                stack.append(node.right)
+                stack.append(node.left)
+
+        
+        return output
+        
+        
+        
+        
+        # return self.traverse(root)
