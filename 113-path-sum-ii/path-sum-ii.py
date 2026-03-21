@@ -27,4 +27,6 @@ class Solution:
         self.dfs(root.left, nums.copy(), total, target)
         self.dfs(root.right, nums.copy(), total, target)
 
+        # first add value, then recurse (pass it to the children) and finally remove the current val and go back
+        nums.pop()  
 
