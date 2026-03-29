@@ -1,6 +1,7 @@
 class Solution:
     def makesquare(self, matchsticks: List[int]) -> bool:
         n = len(matchsticks)
+        matchsticks.sort(reverse = True)
         sticks = [0, 0, 0, 0]
 
         summ = sum(matchsticks)
@@ -22,7 +23,7 @@ class Solution:
 
                 if sticks[i] + matchsticks[index] <= side:
                     sticks[i] += matchsticks[index]
-                    
+
                     if solve(index + 1, sticks):
                         return True
 
