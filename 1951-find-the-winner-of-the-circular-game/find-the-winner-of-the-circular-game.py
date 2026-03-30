@@ -1,18 +1,16 @@
 class Solution:
     def findTheWinner(self, n: int, k: int) -> int:
-        players = [i + 1 for i in range(n)]
+        nums = [i for i in range(1, n + 1)]
+        
+        def solve(index, players):
+            if len(players) == 1:
+                return players[0]
 
-        k_ = k 
-        i = 0
+            loser = (index + k - 1) % len(players)
+            next = loser % (len(players) - 1)
 
-        while len(players) > 1 and i < len(players):
-            k_ -= 1
-            if k_ == 0:
-                players.pop(i)
-                i -= 1
-                k_ = k
-            
-            i += 1
-            i %= len(players) 
-            
-        return players[0]
+            players = players[:loser] + players[loser + 1 :]
+
+            return solve(next, players)
+
+        return solve(0, nums)
