@@ -1,36 +1,35 @@
 class Solution:
     def sortArray(self, nums: List[int]) -> List[int]:
-        self.sort(nums, 0, len(nums) - 1)
-        return nums
-    
-    def sort(self,nums, low, high):
-        if low >= high:
-            return 
-        mid = (low + high) // 2
-        self.sort(nums, low, mid)
-        self.sort(nums, mid + 1, high)
-        self.merge(nums, low, mid, high)
-    
-    def merge(self, nums, low, mid, high):
-        left = low
-        right = mid + 1
-        temp = []
-        while left <= mid and right <= high:
-            if nums[left] <= nums[right]:
-                temp.append(nums[left])
-                left += 1
-            else:
-                temp.append(nums[right])
-                right += 1
-        
-        while left <= mid:
-            temp.append(nums[left])
-            left += 1
-        
-        while right <= high:
-            temp.append(nums[right])
-            right += 1
+        return self.mergeSort(0, len(nums) - 1, nums)
 
-        for i in range(low, high + 1):
-            nums[i] = temp[i - low]
+
+    def mergeSort(self, left, right, nums):
+        if left == right:
+            return [nums[left]]
+
+        mid = left + (right - left) // 2
+
+        left_arr = self.mergeSort(left, mid, nums)
+        right_arr = self.mergeSort(mid + 1, right, nums)
+
+        return self.merge(left_arr, right_arr)        
         
+    def merge(self, left, right):
+        result = []
+        i = 0
+        j = 0
+
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                result.append(left[i])
+                i += 1
+
+            else:
+                result.append(right[j])
+                j += 1
+
+        result.extend(left[i:])
+        result.extend(right[j:])
+
+        return result
+
