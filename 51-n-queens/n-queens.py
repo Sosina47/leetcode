@@ -1,24 +1,24 @@
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        output = set()
-        col = []
-        left = []
-        right = []
+        output = []
+        col = set()
+        left = set()
+        right = set()
         
         def solve(path):
             nonlocal col, left, right
 
             if len(path) == n:
-                output.add(tuple(path[:]))
+                output.append(path[:])
                 return 
 
             length = len(path) 
 
             for i in range(n):
                 if i not in col and i - length not in right and i + length not in left:
-                    col.append(i)
-                    left.append(i + length)
-                    right.append(i - length)
+                    col.add(i)
+                    left.add(i + length)
+                    right.add(i - length)
 
                     cur = ['Q' if j == i else '.' for j in range(n)]
 
@@ -27,10 +27,10 @@ class Solution:
                     solve(path)
 
                     path.pop()
-                    col.pop()
-                    left.pop()
-                    right.pop()
+                    col.remove(i)
+                    left.remove(i + length)
+                    right.remove(i - length)
 
         solve([])
-        return list(output)
+        return output
 
