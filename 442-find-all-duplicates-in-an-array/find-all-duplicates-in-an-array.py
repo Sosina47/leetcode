@@ -1,11 +1,20 @@
-from typing import List
-
 class Solution:
     def findDuplicates(self, nums: List[int]) -> List[int]:
-        output = []
-        nums.sort()
-        for i in range(1, len(nums)):
-            if nums[i] == nums[i - 1]:
-                output.append(nums[i])
+        output = set()
 
-        return output
+        i = 0
+        while i < len(nums):
+            if nums[i] == i + 1:
+                i += 1
+
+            else:
+                correct = nums[i] - 1
+
+                if nums[i] == nums[correct]:
+                    output.add(nums[i])
+                    i += 1
+
+                else:
+                    nums[i], nums[correct] = nums[correct], nums[i]
+
+        return list(output)
