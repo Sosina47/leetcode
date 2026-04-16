@@ -6,15 +6,18 @@ class Solution:
 
         def solve(path):
             if len(path) == n + 1:
-                output.append(''.join(map(str, path)))
-                return 
+                return ''.join(map(str, path))
 
             for i in range(1, 10): 
                 if not path:
                     path.append(i)
                     seen.add(i)
 
-                    solve(path)
+                    output = solve(path)
+
+                    if output:
+                        return output
+                        
                     seen.remove(path.pop())
 
                 else:
@@ -28,7 +31,10 @@ class Solution:
                             path.append(i)
                             seen.add(i)
 
-                            solve(path)
+                            output = solve(path)
+
+                            if output:
+                                return output
 
                             seen.remove(path.pop())
 
@@ -37,10 +43,13 @@ class Solution:
                             path.append(i)
                             seen.add(i) 
 
-                            solve(path)
+                            output = solve(path)
+                            if output:
+                                return output
 
                             seen.remove(path.pop())
-                        
                 
-        solve([])
-        return sorted(output)[0]
+            return ''
+
+                
+        return solve([])
