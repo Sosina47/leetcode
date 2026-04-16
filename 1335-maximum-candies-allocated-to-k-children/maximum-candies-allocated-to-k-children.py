@@ -1,18 +1,23 @@
 class Solution:
     def maximumCandies(self, candies: List[int], k: int) -> int:
-        if sum(candies) < k:
-            return 0
+        total = sum(candies)
 
-        def check(mid):
-            count = 0
-            for i in range(len(candies)):
-                count += candies[i] // mid
-
-            return count >= k
-                
+        if total < k:
+            return 0       
+        
+        n = len(candies)
 
         high = max(candies)
         low = 1
+
+        def check(mid):
+            count = 0
+
+            for c in candies:
+                count += c // mid
+
+            return count >= k
+
 
         while high >= low:
             mid = (high + low) // 2
@@ -22,5 +27,5 @@ class Solution:
 
             else:
                 high = mid - 1
-
-        return high
+        
+        return high 
