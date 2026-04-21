@@ -4,31 +4,32 @@ class Solution:
         m = len(grid[0])
 
         directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        visited = [[False] * m for _ in range(n)]
-
         count = 0
 
         def inbound(i, j):
             return 0 <= i < n and 0 <= j < m
 
-        def dfs(i, j):
-            for dr, dc in directions:
-                nr = i + dr
-                nc = j + dc
-
-                if inbound(nr, nc) and grid[nr][nc] == '1' and not visited[nr][nc]:
-                    visited[nr][nc] = True
-                    dfs(nr, nc)
-
-            
+        stack = []
 
         for i in range(n): 
             for j in range(m):
 
-                if grid[i][j] == '1' and not visited[i][j] and inbound(i, j):
-                    visited[i][j] = True
+                if grid[i][j] == '1':
+                    grid[i][j] == '0'
+
+                    stack.append((i, j))
                     count += 1
 
-                    dfs(i, j)
+                    while stack: 
+                        r, c = stack.pop()
+
+                        for dr, dc in directions:
+                            nr = r + dr
+                            nc = c + dc
+
+                            if inbound(nr, nc) and grid[nr][nc] == '1':
+                                grid[nr][nc] = '0'
+                                stack.append((nr, nc))
 
         return count
+
