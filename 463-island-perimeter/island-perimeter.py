@@ -6,34 +6,43 @@ class Solution:
         directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
         visited = [[False] * m for _ in range(n)]
-        perimeter = 0
+
+        def outbound(i, j):
+            return not(0 <= i < n and 0 <= j < m)
+
+        stack = []
+        first = False
+
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] == 1:
+                    visited[i][j] = True
+
+                    stack.append((i, j))
+                    first = True
+                    break
+
+            if first:
+                break
         
-        def outbound(i, j): 
-            return i >= n or i < 0 or j >= m or j < 0
+        perimeter = 0
 
+        while stack:
+            i, j = stack.pop()
 
-        def dfs(i, j):
-            nonlocal perimeter
+            for dr, dc in directions:
+                nr = i + dr 
+                nc = dc + j
 
-            visited[i][j] = True
-
-            for r, c in directions:
-                new_row = i + r
-                new_col = j + c
-
-                if outbound(new_row, new_col) or grid[new_row][new_col] == 0:
+                if outbound(nr, nc) or grid[nr][nc] == 0:
                     perimeter += 1
 
-                elif not visited[new_row][new_col]:
-                    dfs(new_row, new_col)
+                elif not visited[nr][nc]:
+                    visited[nr][nc] = True
+                    stack.append((nr, nc))
+
+        return perimeter
+
             
-            
 
-        for i in range(n): 
-            for j in range(m):
-
-                if grid[i][j] == 1:
-                    dfs(i, j)
-                    return perimeter
-
-        return 0
+                    
