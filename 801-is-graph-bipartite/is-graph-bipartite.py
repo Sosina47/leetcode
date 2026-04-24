@@ -1,28 +1,22 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        n = len(graph)
-        color = [-1] * n
+        color = defaultdict(lambda : -1)
 
-        for i in range(n):
+        for i in range(len(graph)): 
+            que = deque([i])
+
             if color[i] == -1:
-                color[i] = 0
-
-            stack = [i]
-
-            while stack:
-                index = stack.pop()
+                color[i] = 1
                 
-                for ch in graph[index]:
-                    if color[ch] == -1:
-                        color[ch] = color[index] ^ 1
+                while que: 
+                    node = que.popleft()
 
-                    elif color[ch] == color[index]:
-                        return False
+                    for n in graph[node]: 
+                        if color[n] != -1 and color[n] != color[node] ^ 1: 
+                            return False
 
-                    else:
-                        continue
+                        if color[n] == -1: 
+                            color[n] = color[node] ^ 1
+                            que.append(n)
 
-                    stack.append(ch)
-
-                    
-        return True
+        return True 
