@@ -11,18 +11,20 @@ class Solution:
     def getImportance(self, employees: List['Employee'], id: int) -> int:
         adj_list = defaultdict(list)
 
-        for i in employees:
-            adj_list[i.id].append(i.importance)
-            adj_list[i.id].append(i.subordinates)
+        for e in employees:
+            adj_list[e.id].append(e.importance)
+            adj_list[e.id].append(e.subordinates)        
+        
+        que = deque()
+        que.append(id)
+        total = 0
 
+        while que:
+            i = que.popleft()
 
-        def dfs(idx):
-            count = adj_list[idx][0]
+            total += adj_list[i][0]
 
-            for val in adj_list[idx][1]:
-                count += dfs(val)
+            for n in adj_list[i][1]: 
+                que.append(n)
 
-            return count            
-            
-
-        return dfs(id)
+        return total
