@@ -72,11 +72,11 @@ class Solution:
         for i in range(n): 
             for j in range(m):
 
-                # if visited_p[i][j]:
-                #     if pac[i][j] and atl[i][j]: 
-                #         output.append([i, j])
+                if visited_p[i][j] and visited_a[i][j]:
+                    if pac[i][j] and atl[i][j]: 
+                        output.append([i, j])
                     
-                # else:
+                else:
                     visited_p[i][j] = True
                     visited_a[i][j] = True
 
