@@ -1,29 +1,36 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         adj_list = [[] for _ in range(numCourses)] 
-        depends = [0] * numCourses
 
         for i in range(len(prerequisites)):
             n, m = prerequisites[i]
 
-            adj_list[m].append(n)
-            depends[n] += 1
+            adj_list[n].append(m)
 
-        q = deque()
-        for i in range(numCourses): 
-            if depends[i] == 0: 
-                q.append(i)
-
+        visited = [-1] * numCourses
         output = []
-        while q:
-            node = q.popleft()
-            output.append(node)
 
-            for val in adj_list[node]: 
-                depends[val] -= 1
+        def dfs(i): 
+            for val in adj_list[i]: 
+                if visited[val] == 2:
+                    continue
 
-                if depends[val] == 0: 
-                    q.append(val)
-                    
+                if visited[val] == 1: 
+                    return False
 
-        return output if len(output) == numCourses else []
+                visited[val] = 1
+                if not dfs(val):
+                    return False
+
+            visited[i] = 2
+            output.append(i)
+
+            return True
+
+
+        for i in range(numCourses): 
+            if visited[i] != 2: 
+                if not dfs(i): 
+                    return []
+
+        return output
