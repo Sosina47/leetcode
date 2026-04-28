@@ -1,7 +1,7 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        adj_list = defaultdict(list)
-        depends = defaultdict(int)
+        adj_list = [[] for _ in range(numCourses)] 
+        depends = [0] * numCourses
 
         for i in range(len(prerequisites)):
             n, m = prerequisites[i]
@@ -9,14 +9,10 @@ class Solution:
             adj_list[m].append(n)
             depends[n] += 1
 
-        for i in range(numCourses): 
-            depends[i]
-        
-        
         q = deque()
-        for key in depends: 
-            if depends[key] == 0: 
-                q.append(key)
+        for i in range(numCourses): 
+            if depends[i] == 0: 
+                q.append(i)
 
         output = []
         while q:
@@ -24,9 +20,10 @@ class Solution:
             output.append(node)
 
             for val in adj_list[node]: 
-                if depends[val] == 1: 
+                depends[val] -= 1
+
+                if depends[val] == 0: 
                     q.append(val)
-                else: 
-                    depends[val] -= 1
+                    
 
         return output if len(output) == numCourses else []
