@@ -1,11 +1,12 @@
 class Solution:
     def topKFrequent(self, words: List[str], k: int) -> List[str]:
-        frequency_table = Counter(words)
-        pairs = list(frequency_table.items())
-        pairs.sort(key = lambda x: (-x[1], x[0]))
+        freq = Counter(words)
+        heap = [(-freq[key], key) for key in freq]
 
+        heapify(heap)
         output = []
-        for i in range(k):
-            output.append(pairs[i][0])
+
+        for _ in range(k):
+            output.append(heappop(heap)[1])
 
         return output
