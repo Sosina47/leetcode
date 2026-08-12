@@ -5,9 +5,9 @@ class Solution:
         for i in range(n):
             if s[i]==s[n-i-1]:
                 return i
-            pass
+            
         return -1
 
-        return (array[0])
+        
 
         
